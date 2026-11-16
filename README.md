@@ -61,3 +61,22 @@ docker compose down
 | `pgadmin` | DB UI | `8091` → 80 |
 
 `.env`, `vendor/`, and `node_modules/` are not committed.
+
+## Legacy data import
+
+CSV exports stay local (gitignored) under `database/data/legacy/` as `km-*.csv`.
+
+```bash
+# copy exports into database/data/legacy/ then:
+docker compose exec app php artisan migrate
+docker compose exec app php artisan tradeops:import-legacy --fresh
+```
+
+| Legacy table | TradeOps table |
+|---|---|
+| `clients` | `companies` |
+| `customers` | `projects` |
+| `products` | `materials` |
+| `machines` | `machines` |
+| `accounting` | `accounting_entries` |
+| `uyeler` | skipped (Breeze `users`) |
