@@ -12,6 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Railway (and similar) terminate TLS at the edge; trust X-Forwarded-* so
+        // asset()/url() generate https:// links instead of mixed-content http://.
+        $middleware->trustProxies(at: '*');
+
         $middleware->redirectUsersTo('/accounting');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
