@@ -60,13 +60,13 @@ class ImportLegacyCsv extends Command
             $this->warn('Domain tables truncated.');
         }
 
-        DB::transaction(function () use ($files) {
-            $this->importCompanies($files['companies']);
-            $this->importProjects($files['projects']);
-            $this->importMaterials($files['materials']);
-            $this->importMachines($files['machines']);
-            $this->importAccountingEntries($files['accounting_entries']);
-        });
+        // Import outside one giant transaction so a dropped remote DB link
+        // does not roll back already-written masters (companies/projects/...).
+        $this->importCompanies($files['companies']);
+        $this->importProjects($files['projects']);
+        $this->importMaterials($files['materials']);
+        $this->importMachines($files['machines']);
+        $this->importAccountingEntries($files['accounting_entries']);
 
         $this->resetPostgresSequences([
             'companies',

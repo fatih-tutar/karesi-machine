@@ -5,15 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\AccountingEntry;
 use App\Models\Project;
-use App\Services\TcmbExchangeRate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ProjectController extends Controller
 {
-    public function __construct(private readonly TcmbExchangeRate $rates) {}
-
     public function index(): View
     {
         $sumFor = fn (int $type) => fn ($q) => $q->where('is_deleted', false)->where('type', $type);
@@ -27,25 +24,12 @@ class ProjectController extends Controller
             ->orderByDesc('id')
             ->get();
 
-        // TCMB lookups are slow: fetch at most a few uncached rates per page load (they are then
-        // cached forever); the rest fall back to the USD amounts stored on each entry.
-        $fetchBudget = 3;
-
-        $rows = $projects->map(function (Project $project) use (&$fetchBudget) {
+        // Use stored USD amounts from accounting entries — avoid live TCMB calls on list load.
+        $rows = $projects->map(function (Project $project) {
             $incoming = (float) $project->incoming;
             $outgoing = (float) $project->outgoing;
-
-            // Convert the totals at the project-date rate (legacy behaviour); fall back to stored USD sums.
-            $date = $project->recorded_on->toDateString();
-            $rate = $this->rates->getCachedUsdRate($date);
-
-            if ($rate === null && $fetchBudget > 0) {
-                $fetchBudget--;
-                $rate = $this->rates->getUsdRate($date) ?: null;
-            }
-
-            $incomingUsd = $rate ? $incoming / $rate : (float) $project->incoming_usd;
-            $outgoingUsd = $rate ? $outgoing / $rate : (float) $project->outgoing_usd;
+            $incomingUsd = (float) $project->incoming_usd;
+            $outgoingUsd = (float) $project->outgoing_usd;
 
             return (object) [
                 'project' => $project,
