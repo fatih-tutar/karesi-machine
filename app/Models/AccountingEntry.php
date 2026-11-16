@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasIsDeletedFlag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AccountingEntry extends Model
 {
+    use HasIsDeletedFlag;
+
     public const TYPE_EXPENSE = 0;
 
     public const TYPE_INCOME = 1;

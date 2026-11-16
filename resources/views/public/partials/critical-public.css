@@ -1,0 +1,18 @@
+/* Above-the-fold — hero; navbar Bootstrap CSS ile gelir */
+body.index2{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:#2a2622;background:linear-gradient(165deg,#fbfcfe 0%,#f4f7fb 42%,#eef3f9 100%);background-color:#eef3f9;padding-top:78px}
+@media(min-width:768px){body.index2{padding-top:90px}}
+.idx2-hero{position:relative;display:flex;flex-direction:column;overflow:hidden;background:transparent}
+.idx2-hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.idx2-hero-bg-dots{position:absolute;inset:-20% -10%;background-image:radial-gradient(rgba(47,116,208,.14) 1.2px,transparent 1.2px);background-size:22px 22px;opacity:.55}
+.idx2-hero-bg-blob-tr{position:absolute;width:min(72vw,640px);height:min(52vw,460px);top:-14%;right:-12%;border-radius:38% 62% 48% 52%/42% 45% 55% 58%;background:linear-gradient(155deg,rgba(47,125,243,.42) 0%,rgba(47,125,243,.12) 45%,transparent 78%)}
+.idx2-hero-bg-blob-bl{position:absolute;width:min(58vw,520px);height:min(42vw,380px);bottom:-22%;left:-16%;border-radius:55% 45% 60% 40%/50% 55% 45% 50%;background:radial-gradient(ellipse at 35% 40%,rgba(210,225,245,.75) 0%,rgba(230,238,250,.35) 45%,transparent 70%)}
+.idx2-hero-main,.idx2-hero .container{position:relative;z-index:1}
+.idx2-hero-visual{aspect-ratio:720/442;width:100%;max-width:100%;margin:0 auto}
+.idx2-nav-brand img{display:block;height:50px;width:auto;max-width:180px}
+.idx2-hero-visual img{width:100%;height:auto;display:block}
+.idx2-hero-primary,.idx2-hero-secondary{display:inline-flex;align-items:center;padding:.65rem 1.25rem;border-radius:.55rem;font-weight:700;text-decoration:none;border:0}
+.idx2-hero-primary{background:#b91c1c;color:#fff}
+.idx2-hero-secondary{background:#fff;color:#12233f;border:1px solid rgba(47,116,208,.35)}
+.idx2-hero-title-line{display:block;font-size:.82rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#2f74d0;margin-bottom:.35rem}
+.idx2-hero-title-main{display:block;font-size:clamp(1.75rem,7.5vw,2.65rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;color:#12233f}
+.idx2-hero-lead{font-size:1.05rem;line-height:1.55;color:rgba(42,38,34,.72);margin-bottom:1rem}

@@ -1,0 +1,55 @@
+a{text-decoration: none; color:black;}
+
+a:hover{
+	text-decoration: none;
+}
+
+table td a {
+	font-style: italic;
+}
+
+.fab-add {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background: #dc3545;
+	color: white;
+	border: none;
+	font-size: 28px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+	z-index: 9999;
+	transition: 0.2s;
+}
+
+.fab-add:hover {
+	background: #bb2d3b;
+	transform: scale(1.07);
+}
+
+/* Gelir satırı */
+ .income-row {
+	 background-color: #f0fff4 !important;   /* çok açık yeşil */
+ }
+
+.income-row td {
+	color: #146c43;
+	font-weight: 600;
+}
+
+/* Sol şerit efekti (modern görünüm) */
+.income-row td:first-child {
+	border-left: 4px solid #28a745;
+}
+
+/* Hover durumunda da kaybolmasın */
+.table-striped > tbody > tr.income-row:nth-of-type(odd) {
+	background-color: #e6ffed !important;
+}
+
+/* Tanıtım sayfası (index.php): css/style-public.css */

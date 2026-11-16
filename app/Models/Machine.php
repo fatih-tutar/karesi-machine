@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasIsDeletedFlag;
 use Illuminate\Database\Eloquent\Model;
 
 class Machine extends Model
 {
+    use HasIsDeletedFlag;
+
     protected $fillable = [
         'id',
         'name',
