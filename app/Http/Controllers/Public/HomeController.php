@@ -17,7 +17,7 @@ class HomeController extends Controller
             ],
             [
                 'question' => 'Otomatik simit makinası saatlik kaç adet üretir?',
-                'answer' => 'Karesi Makine otomatik simit yapma makinası saatlik 3000 adete kadar simit üretim kapasitesi sunar. 25–150 gr aralığında siparişe özel ayar yapılabilir.',
+                'answer' => 'Karesi Makine otomatik simit yapma makinası saatlik 3600 adete kadar simit üretim kapasitesi sunar. 25–150 gr aralığında siparişe özel ayar yapılabilir.',
             ],
             [
                 'question' => 'Simit bağlama makinesi nedir?',

@@ -48,7 +48,7 @@
                         <span class="idx2-spec-icon" aria-hidden="true"><i class="bi bi-speedometer2"></i></span>
                         <span>
                             <span class="idx2-spec-val">Saatlik Üretim</span>
-                            <span class="idx2-spec-desc">3000 adet/saat kapasiteyle tempo ve yoğun talepte hattınıza destek.</span>
+                            <span class="idx2-spec-desc">3600 adet/saat kapasiteyle tempo ve yoğun talepte hattınıza destek.</span>
                         </span>
                     </div>
                 </div>
@@ -188,7 +188,7 @@
                     <span class="idx2-spec-icon" aria-hidden="true"><i class="bi bi-speedometer2"></i></span>
                     <span>
                         <span class="idx2-spec-val">Saatlik Üretim</span>
-                        <span class="idx2-spec-desc">3000 adet/saat kapasiteyle tempo ve yoğun talepte hattınıza destek.</span>
+                        <span class="idx2-spec-desc">3600 adet/saat kapasiteyle tempo ve yoğun talepte hattınıza destek.</span>
                     </span>
                 </div>
             </div>
@@ -405,7 +405,7 @@
                 "Simit Yapma Makinesi",
                 "Simit Makineleri"
             ],
-            "description": "Saatlik 3000 adete kadar üretim kapasiteli otomatik simit yapma ve simit bağlama makinesi. Simit makinesi fiyatları için teklif; işletmenizde deneme imkânı.",
+            "description": "Saatlik 3600 adete kadar üretim kapasiteli otomatik simit yapma ve simit bağlama makinesi. Simit makinesi fiyatları için teklif; işletmenizde deneme imkânı.",
             "image": "{{ $seoSiteUrl }}/img/makina-1100.png",
             "category": "Endüstriyel Gıda Makineleri",
             "brand": { "@@type": "Brand", "name": "Karesi Makine" },
