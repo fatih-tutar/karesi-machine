@@ -6,7 +6,7 @@ Greenfield Laravel rebuild of the legacy Karesi Makine Core PHP app. PostgreSQL-
 
 ## Stack
 
-- Laravel 13
+- Laravel 13 + Breeze (Blade) auth — login only, public registration disabled
 - Docker Compose: PHP-FPM, Nginx, PostgreSQL 16, pgAdmin
 - Railway deploy via `Dockerfile.railway`
 
@@ -25,13 +25,16 @@ docker compose up -d
 
 docker compose exec app composer install
 docker compose exec app php artisan key:generate
-docker compose exec app php artisan migrate
+docker compose exec app php artisan migrate --seed
 
-# Frontend assets (optional for now):
-# npm install && npm run build
+# Frontend assets:
+docker run --rm -v "$PWD":/app -w /app node:22-bookworm bash -c "npm install && npm run build"
 ```
 
 - App: **http://localhost:8090**
+- Login: **http://localhost:8090/login**
+  - Email: `admin@tradeops.test`
+  - Password: `password`
 - pgAdmin: **http://localhost:8091**
   - Email: `admin@example.com`
   - Password: `secret`
