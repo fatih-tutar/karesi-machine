@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('materials', MaterialController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
     Route::resource('companies', CompanyController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::post('projects/{project}/entries/reassign', [ProjectController::class, 'reassignEntries'])
+        ->name('projects.entries.reassign');
     Route::resource('projects', ProjectController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
     Route::resource('machines', MachineController::class)->only(['index', 'store', 'update', 'destroy']);
 

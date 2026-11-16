@@ -204,4 +204,34 @@ class AdminPagesTest extends TestCase
         $this->delete("/machines/{$machine->id}")->assertRedirect('/machines');
         $this->assertTrue($machine->fresh()->is_deleted);
     }
+
+    public function test_bulk_reassign_project_entries(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $source = Project::create(['name' => 'Kaynak', 'recorded_on' => '2026-01-01', 'is_deleted' => false]);
+        $target = Project::create(['name' => 'Hedef', 'recorded_on' => '2026-01-02', 'is_deleted' => false]);
+        $keep = $this->entry(['project_id' => $source->id, 'note' => 'kalacak']);
+        $moveA = $this->entry(['project_id' => $source->id, 'note' => 'tasinacak-a', 'amount_try' => 500]);
+        $moveB = $this->entry(['project_id' => $source->id, 'note' => 'tasinacak-b', 'amount_try' => 750]);
+
+        $this->get("/projects/{$source->id}")
+            ->assertOk()
+            ->assertSee('Seçilen kayıtları taşı')
+            ->assertSee('Hedef');
+
+        $this->post("/projects/{$source->id}/entries/reassign", [
+            'entry_ids' => [$moveA->id, $moveB->id],
+            'target_project_id' => $target->id,
+        ])->assertRedirect("/projects/{$source->id}");
+
+        $this->assertSame($source->id, $keep->fresh()->project_id);
+        $this->assertSame($target->id, $moveA->fresh()->project_id);
+        $this->assertSame($target->id, $moveB->fresh()->project_id);
+
+        $this->post("/projects/{$source->id}/entries/reassign", [
+            'entry_ids' => [$keep->id],
+            'target_project_id' => $source->id,
+        ])->assertSessionHasErrors('target_project_id');
+    }
 }

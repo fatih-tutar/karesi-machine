@@ -70,14 +70,48 @@ class ProjectController extends Controller
         $outgoing = (float) $entries->where('type', AccountingEntry::TYPE_EXPENSE)->sum('amount_try');
         $incoming = (float) $entries->where('type', AccountingEntry::TYPE_INCOME)->sum('amount_try');
 
+        $otherProjects = Project::active()
+            ->where('id', '!=', $project->id)
+            ->orderBy('name')
+            ->get(['id', 'name']);
+
         return view('admin.projects.show', [
             'project' => $project,
             'entries' => $entries,
+            'otherProjects' => $otherProjects,
             'outgoing' => $outgoing,
             'incoming' => $incoming,
             'profitPercent' => $outgoing > 0 ? (($incoming - $outgoing) / $outgoing) * 100 : null,
             ...AccountingController::selectLists(),
         ]);
+    }
+
+    public function reassignEntries(Request $request, Project $project): RedirectResponse
+    {
+        abort_if($project->is_deleted, 404);
+
+        $data = $request->validate([
+            'entry_ids' => ['required', 'array', 'min:1'],
+            'entry_ids.*' => ['integer', 'distinct'],
+            'target_project_id' => [
+                'required',
+                'integer',
+                'not_in:'.$project->id,
+                'exists:projects,id',
+            ],
+        ]);
+
+        $target = Project::query()->findOrFail($data['target_project_id']);
+        abort_if($target->is_deleted, 422);
+
+        $updated = AccountingEntry::active()
+            ->where('project_id', $project->id)
+            ->whereIn('id', $data['entry_ids'])
+            ->update(['project_id' => $target->id]);
+
+        return redirect()
+            ->route('projects.show', $project)
+            ->with('status', "{$updated} kayıt «{$target->name}» projesine taşındı.");
     }
 
     public function store(Request $request): RedirectResponse
