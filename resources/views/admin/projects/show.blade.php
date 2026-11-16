@@ -37,7 +37,7 @@
                 <option value="{{ $other->id }}" @selected((string) old('target_project_id') === (string) $other->id)>{{ $other->name }}</option>
             @endforeach
         </select>
-        <button type="submit" class="btn btn-sm btn-primary" id="bulkReassignBtn" disabled>
+        <button type="button" class="btn btn-sm btn-primary" id="bulkReassignBtn" disabled data-bs-toggle="modal" data-bs-target="#bulkReassignModal">
             Projeye taşı
         </button>
         <span class="small text-muted" id="bulkSelectedCount">0 seçili</span>
@@ -50,6 +50,24 @@
         @if ($otherProjects->isEmpty())
             <div class="w-100 text-muted small">Taşımak için başka aktif proje yok.</div>
         @endif
+    </div>
+
+    <div class="modal fade" id="bulkReassignModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Kayıtları taşı</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0" id="bulkReassignModalBody">Seçilen kayıtları hedef projeye taşımak istediğinize emin misiniz?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-primary" id="bulkReassignConfirmBtn">Evet, taşı</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="table-responsive">
@@ -125,6 +143,8 @@
     const btn = document.getElementById('bulkReassignBtn');
     const countEl = document.getElementById('bulkSelectedCount');
     const target = form.querySelector('[name="target_project_id"]');
+    const modalEl = document.getElementById('bulkReassignModal');
+    const modalBody = document.getElementById('bulkReassignModalBody');
 
     function refresh() {
         const selected = boxes().filter((b) => b.checked);
@@ -137,6 +157,12 @@
         }
     }
 
+    function updateModalCopy() {
+        const n = boxes().filter((b) => b.checked).length;
+        const name = target.options[target.selectedIndex]?.text || 'hedef proje';
+        modalBody.textContent = n + ' kaydı «' + name + '» projesine taşımak istediğinize emin misiniz?';
+    }
+
     selectAll?.addEventListener('change', () => {
         boxes().forEach((b) => { b.checked = selectAll.checked; });
         refresh();
@@ -146,16 +172,12 @@
         if (e.target.classList.contains('entry-select') || e.target === target) refresh();
     });
 
-    form.addEventListener('submit', (e) => {
-        const n = boxes().filter((b) => b.checked).length;
-        if (n === 0 || !target.value) {
+    modalEl?.addEventListener('show.bs.modal', (e) => {
+        if (boxes().filter((b) => b.checked).length === 0 || !target.value) {
             e.preventDefault();
             return;
         }
-        const name = target.options[target.selectedIndex]?.text || 'hedef proje';
-        if (!confirm(n + ' kaydı «' + name + '» projesine taşımak istiyor musunuz?')) {
-            e.preventDefault();
-        }
+        updateModalCopy();
     });
 
     refresh();
