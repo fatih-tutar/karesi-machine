@@ -83,14 +83,16 @@ class HomeController extends Controller
             ],
         ], $seoFaqs);
 
+        $siteUrl = config('seo.site_url');
+
         return view('public.pages.home', [
             'seoTitle' => 'Simit Makinesi Fiyatları | Otomatik Simit Bağlama Makinası — Karesi Makine',
             'seoDescription' => 'Simit makinesi ve otomatik simit yapma makinası üreticisi. Simit bağlama makineleri, simit makinası fiyatları ve işletmenizde deneme imkânı. Karesi Makine — İstanbul.',
             'seoOgTitle' => 'Simit Makinesi & Otomatik Simit Yapma Makinası | Karesi Makine',
             'seoKeywords' => 'simit makinesi, simit makinası, simit makinesi fiyatları, simit makinası fiyatları, otomatik simit makinesi, simit yapma makinası, simit makineleri, simit bağlama makinası',
-            'seoCanonical' => 'https://www.karesimakine.com/',
-            'seoOgImage' => 'https://www.karesimakine.com/img/makina-1100.png',
-            'seoSiteUrl' => 'https://www.karesimakine.com',
+            'seoCanonical' => $siteUrl.'/',
+            'seoOgImage' => $siteUrl.'/img/makina-1100.png',
+            'seoSiteUrl' => $siteUrl,
             'seoProductPrice' => 230000,
             'seoFaqs' => $seoFaqs,
             'faqSchema' => $faqSchema,

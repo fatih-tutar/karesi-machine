@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\PageController;
+use App\Http\Controllers\Public\SeoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,8 @@ Route::get('/', HomeController::class)->name('home');
 Route::get('/deneme', [PageController::class, 'trial'])->name('public.trial');
 Route::get('/referanslar', [PageController::class, 'references'])->name('public.references');
 Route::get('/iletisim', [PageController::class, 'contact'])->name('public.contact');
+Route::get('/robots.txt', [SeoController::class, 'robots'])->name('public.robots');
+Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('public.sitemap');
 
 /*
 |--------------------------------------------------------------------------

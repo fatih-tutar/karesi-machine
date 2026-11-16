@@ -8,18 +8,18 @@ use Illuminate\Contracts\View\View;
 
 class PageController extends Controller
 {
-    private const SITE_URL = 'https://www.karesimakine.com';
-
     public function trial(): View
     {
+        $siteUrl = config('seo.site_url');
+
         return view('public.pages.deneme', [
             'seoTitle' => 'İşletmede Deneme | Simit Makinesi Yerinde Test — Karesi Makine',
             'seoDescription' => 'Simit makinesini satın almadan önce kendi hamurunuzda ve üretim hattınızda deneyin. Karesi Makine işletmede deneme imkânı sunar; tarih için hemen arayın.',
             'seoOgTitle' => 'İşletmede Deneme | Karesi Makine',
             'seoKeywords' => 'simit makinesi deneme, işletmede deneme, simit makinası test, yerinde deneme, karesi makine deneme',
-            'seoCanonical' => self::SITE_URL.'/deneme',
-            'seoOgImage' => self::SITE_URL.'/img/deneme-hero.jpg',
-            'seoSiteUrl' => self::SITE_URL,
+            'seoCanonical' => $siteUrl.'/deneme',
+            'seoOgImage' => $siteUrl.'/img/deneme-hero.jpg',
+            'seoSiteUrl' => $siteUrl,
             'skipHeroPreload' => true,
             'navActive' => 'deneme',
             'heroBg' => asset('img/deneme-hero.jpg'),
@@ -33,6 +33,7 @@ class PageController extends Controller
 
     public function references(ReferenceVideoService $referenceVideos): View
     {
+        $siteUrl = config('seo.site_url');
         $refVideos = $referenceVideos->all();
 
         return view('public.pages.referanslar', [
@@ -40,9 +41,9 @@ class PageController extends Controller
             'seoDescription' => 'Karesi Makine referans videoları: işletmelerde çalışan simit makinesi ve simit makinası uygulamalarını izleyin. Yerinde kurulum ve üretim görüntüleri.',
             'seoOgTitle' => 'Referanslar | Karesi Makine',
             'seoKeywords' => 'simit makinesi referans, simit makinası video, karesi makine referanslar, simit bağlama makinesi video',
-            'seoCanonical' => self::SITE_URL.'/referanslar',
-            'seoOgImage' => self::SITE_URL.'/img/makina-1100.png',
-            'seoSiteUrl' => self::SITE_URL,
+            'seoCanonical' => $siteUrl.'/referanslar',
+            'seoOgImage' => $siteUrl.'/img/makina-1100.png',
+            'seoSiteUrl' => $siteUrl,
             'skipHeroPreload' => true,
             'navActive' => 'referanslar',
             'refVideos' => $refVideos,
@@ -54,14 +55,16 @@ class PageController extends Controller
 
     public function contact(): View
     {
+        $siteUrl = config('seo.site_url');
+
         return view('public.pages.iletisim', [
             'seoTitle' => 'İletişim | Karesi Makine — Simit Makinesi Teklif ve Destek',
             'seoDescription' => 'Karesi Makine iletişim: telefon, WhatsApp, e-posta ve Beylikdüzü / İstanbul adresi. Simit makinesi fiyatları, deneme ve kurulum için bize ulaşın.',
             'seoOgTitle' => 'İletişim | Karesi Makine',
             'seoKeywords' => 'karesi makine iletişim, simit makinesi iletişim, simit makinası teklif, beylikdüzü simit makinesi',
-            'seoCanonical' => self::SITE_URL.'/iletisim',
-            'seoOgImage' => self::SITE_URL.'/img/makina-1100.png',
-            'seoSiteUrl' => self::SITE_URL,
+            'seoCanonical' => $siteUrl.'/iletisim',
+            'seoOgImage' => $siteUrl.'/img/makina-1100.png',
+            'seoSiteUrl' => $siteUrl,
             'skipHeroPreload' => true,
             'navActive' => 'iletisim',
         ]);

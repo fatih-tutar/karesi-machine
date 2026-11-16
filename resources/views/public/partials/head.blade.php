@@ -1,5 +1,5 @@
 @php
-    $seoSiteUrl = 'https://www.karesimakine.com';
+    $seoSiteUrl = $seoSiteUrl ?? config('seo.site_url');
     $seoCanonical = $seoCanonical ?? rtrim($seoSiteUrl, '/') . '/';
     $seoTitle = $seoTitle ?? 'Simit Bağlama Makinesi | Karesi Makine';
     $seoDescription = $seoDescription ?? 'Simit bağlama makinesi — yüksek kapasite, işletmenizde deneme imkânı. Karesi Makine.';

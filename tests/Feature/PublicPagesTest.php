@@ -18,6 +18,35 @@ class PublicPagesTest extends TestCase
         }
     }
 
+    public function test_public_seo_uses_configured_canonical_host(): void
+    {
+        config(['seo.site_url' => 'https://karesimakine.com']);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('<link rel="canonical" href="https://karesimakine.com/">', false)
+            ->assertSee('property="og:url" content="https://karesimakine.com/"', false)
+            ->assertDontSee('https://www.karesimakine.com', false);
+
+        $this->get('/deneme')
+            ->assertOk()
+            ->assertSee('<link rel="canonical" href="https://karesimakine.com/deneme">', false);
+    }
+
+    public function test_sitemap_and_robots_advertise_public_urls(): void
+    {
+        $this->get('/sitemap.xml')
+            ->assertOk()
+            ->assertSee('https://karesimakine.com/', false)
+            ->assertSee('https://karesimakine.com/deneme', false)
+            ->assertSee('https://karesimakine.com/referanslar', false)
+            ->assertSee('https://karesimakine.com/iletisim', false);
+
+        $this->get('/robots.txt')
+            ->assertOk()
+            ->assertSee('Sitemap: https://karesimakine.com/sitemap.xml', false);
+    }
+
     public function test_reference_videos_come_from_machines_ordered_by_sort_order_desc(): void
     {
         $base = ['recorded_on' => now()->toDateString(), 'is_deleted' => false];
